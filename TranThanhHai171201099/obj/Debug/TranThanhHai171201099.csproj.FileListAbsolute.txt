@@ -1,0 +1,11 @@
+C:\Users\haili\source\repos\TranThanhHai171201099\TranThanhHai171201099\bin\Debug\TranThanhHai171201099.exe.config
+C:\Users\haili\source\repos\TranThanhHai171201099\TranThanhHai171201099\bin\Debug\TranThanhHai171201099.exe
+C:\Users\haili\source\repos\TranThanhHai171201099\TranThanhHai171201099\bin\Debug\TranThanhHai171201099.pdb
+C:\Users\haili\source\repos\TranThanhHai171201099\TranThanhHai171201099\obj\Debug\TranThanhHai171201099.csprojAssemblyReference.cache
+C:\Users\haili\source\repos\TranThanhHai171201099\TranThanhHai171201099\obj\Debug\TranThanhHai171201099.csproj.ResolveComReference.cache
+C:\Users\haili\source\repos\TranThanhHai171201099\TranThanhHai171201099\obj\Debug\TranThanhHai171201099.Form1.resources
+C:\Users\haili\source\repos\TranThanhHai171201099\TranThanhHai171201099\obj\Debug\TranThanhHai171201099.Properties.Resources.resources
+C:\Users\haili\source\repos\TranThanhHai171201099\TranThanhHai171201099\obj\Debug\TranThanhHai171201099.csproj.GenerateResource.cache
+C:\Users\haili\source\repos\TranThanhHai171201099\TranThanhHai171201099\obj\Debug\TranThanhHai171201099.csproj.CoreCompileInputs.cache
+C:\Users\haili\source\repos\TranThanhHai171201099\TranThanhHai171201099\obj\Debug\TranThanhHai171201099.exe
+C:\Users\haili\source\repos\TranThanhHai171201099\TranThanhHai171201099\obj\Debug\TranThanhHai171201099.pdb
