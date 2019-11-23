@@ -21,7 +21,7 @@ namespace TranThanhHai171201099
 
         private void Bt_XuatExcel_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count > 0) //TH có dữ liệu để ghi
+            if (dataGridView1.Rows.Count > 1) //TH có dữ liệu để ghi
             {
                 //Khai báo và khởi tạo các đối tượng
                 Excel.Application exApp = new Excel.Application();
@@ -53,9 +53,11 @@ namespace TranThanhHai171201099
                 exSheet.get_Range("A7:D7").HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
                 exSheet.get_Range("A7").Value = "STT";
                 exSheet.get_Range("B7").Value = "Mã Công Việc";
+                exSheet.get_Range("B7").ColumnWidth = 20;
                 exSheet.get_Range("C7").Value = "Tên Công Việc";
                 exSheet.get_Range("C7").ColumnWidth = 20;
                 exSheet.get_Range("D7").Value = "Mức Lương";
+                exSheet.get_Range("D7").ColumnWidth = 20;
 
                 //In dữ liệu
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -111,10 +113,10 @@ namespace TranThanhHai171201099
                     txt_MaCV.Focus();
                     return;
                 }
-                string sql1 = " insert into CongViec VALUES ('" + txt_MaCV.Text + "',N'" + txt_TenCV.Text + "','" + txt_MucLuong.Text + "')";
+                string sql1 = " insert into CongViec VALUES ('" + txt_MaCV.Text + "',N'" + txt_TenCV.Text + "','" + txt_MucLuong.Text + "','" + txtImg.Text + "')";
                 database.RunSQL123(sql1);
                 Fill();
-                MessageBox.Show("Thêm Thành Công","Thông báo");
+                MessageBox.Show("Thêm Thành Công", "Thông báo");
                 ClearData();
 
 
@@ -128,15 +130,21 @@ namespace TranThanhHai171201099
             dataGridView1.Columns[0].HeaderText = "Mã Công Việc";
             dataGridView1.Columns[1].HeaderText = "Tên Công Việc";
             dataGridView1.Columns[2].HeaderText = "Mức Lương";
+            dataGridView1.Columns[3].HeaderText = "Ảnh";
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.KeyPreview = true;
             Fill();
             txt_MaCV.Enabled = false;
             txt_MaCV.Text = dataGridView1.Rows[0].Cells[0].Value.ToString();
             txt_TenCV.Text = dataGridView1.Rows[0].Cells[1].Value.ToString();
             txt_MucLuong.Text = dataGridView1.Rows[0].Cells[2].Value.ToString();
+            if (dataGridView1.Rows[0].Cells[3].Value.ToString().Trim() != "")
+            {
+                pictureBox1.Image = Image.FromFile(dataGridView1.Rows[0].Cells[3].Value.ToString());
+            }
         }
         private void ClearData()
         {
@@ -156,7 +164,7 @@ namespace TranThanhHai171201099
 
         private void Bt_Thoat_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Bạn có muốn thoát không ?","Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Bạn có muốn thoát không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 this.Close();
             }
@@ -165,8 +173,13 @@ namespace TranThanhHai171201099
         private void Bt_Sua_Click(object sender, EventArgs e)
         {
             string sql;
-            int t = dataGridView1.CurrentRow.Index;
-            sql = "update CongViec SET MCV = '" + txt_MaCV.Text + "', TenCV = N'" + txt_TenCV.Text + "', MucLuong = '" + txt_MucLuong.Text + "' where MCV = '" + dataGridView1.Rows[t].Cells[0].Value.ToString() + "'";
+
+            sql = "update CongViec SET MCV = '" + txt_MaCV.Text + "', TenCV = N'" + txt_TenCV.Text + "', MucLuong = '" + txt_MucLuong.Text + "',Anh = N'" + txtImg.Text + "' where MCV = '" + txt_MaCV.Text + "'";
+            if (txt_MaCV.Text.Trim() == "")
+            {
+                MessageBox.Show("Hãy chọn một công việc để xóa", "Thông Báo");
+            }
+            else
             if (txt_TenCV.Text.Trim() == "")
             {
                 MessageBox.Show("Hãy Nhập Tên Công Việc", "Thông Báo");
@@ -180,7 +193,7 @@ namespace TranThanhHai171201099
             else
             {
                 database.RunSQL123(sql);
-                MessageBox.Show("Sửa Thành Công","Thông báo");
+                MessageBox.Show("Sửa Thành Công", "Thông báo");
                 Fill();
                 ClearData();
             }
@@ -198,8 +211,8 @@ namespace TranThanhHai171201099
                     MessageBox.Show("Bạn có muốn xóa không", "Thông Báo", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
                 if (ret == DialogResult.Yes)
                 {
-                    int t = dataGridView1.CurrentRow.Index;
-                    string sql = " select MCV from NhanVien where MCV = '" + dataGridView1.Rows[t].Cells[0].Value.ToString() + "'";
+
+                    string sql = " select MCV from NhanVien where MCV = '" + txt_MaCV.Text + "'";
                     DataTable tb = new DataTable();
                     tb = database.LoadDuLieu(sql);
                     if (tb.Rows.Count > 0)
@@ -207,11 +220,20 @@ namespace TranThanhHai171201099
                         MessageBox.Show("Công việc này đã có nhân viên làm rồi không thể xóa.");
                         return;
                     }
-                    sql = "delete from CongViec where MCV = '" + txt_MaCV.Text + "'";
-                    database.RunSQL123(sql);
-                    MessageBox.Show("Xóa Thành Công","Thông báo");
-                    Fill();
-                    ClearData();
+                    if (txt_MaCV.Text.Trim() == "")
+                    {
+                        MessageBox.Show("Hãy chọn một công việc để xóa");
+
+                    }
+                    else
+                    {
+                        sql = "delete from CongViec where MCV = '" + txt_MaCV.Text + "'";
+                        database.RunSQL123(sql);
+                        MessageBox.Show("Xóa Thành Công", "Thông báo");
+                        Fill();
+                        ClearData();
+                    }
+
                 }
             }
         }
@@ -223,6 +245,18 @@ namespace TranThanhHai171201099
             txt_MaCV.Text = dataGridView1.Rows[t].Cells[0].Value.ToString();
             txt_TenCV.Text = dataGridView1.Rows[t].Cells[1].Value.ToString();
             txt_MucLuong.Text = dataGridView1.Rows[t].Cells[2].Value.ToString();
+            if (dataGridView1.Rows[t].Cells[3].Value.ToString().Trim() == "")
+            {
+                txtImg.Text = "";
+                pictureBox1.Visible = false;
+            }
+            else
+            {
+                txtImg.Text = dataGridView1.Rows[t].Cells[3].Value.ToString();
+                pictureBox1.Visible = true;
+                pictureBox1.Image = Image.FromFile(txtImg.Text);
+            }
+
         }
 
         private void Bt_TimKiem_Click(object sender, EventArgs e)
@@ -230,16 +264,61 @@ namespace TranThanhHai171201099
             string sql = "select * from CongViec where MCV is not null ";
             if (txt_SearchMaCV.Text.Trim() != "")
             {
-                sql += " and MCV=N'" + txt_SearchMaCV.Text + "'";
+                sql += " and MCV like '%" + txt_SearchMaCV.Text + "%'";
             }
             if (txt_SearchTenCV.Text.Trim() != "")
             {
-                sql += " and TenCV like '%" + txt_SearchTenCV.Text + "%'";
+                sql += " and TenCV like N'%" + txt_SearchTenCV.Text + "%'";
             }
             dataGridView1.DataSource = database.LoadDuLieu(sql);
             if (dataGridView1.RowCount == 1)
             {
                 MessageBox.Show("Không tìm thấy thông tin công việc", "Thông báo");
+            }
+        }
+
+        private void Btn_LoadAnh_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void Txt_MucLuong_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Btn_Anh_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlgOpen = new OpenFileDialog();
+            dlgOpen.Filter = "Bitmap(*.bmp)|*.bmp|Gif(*.jpg) |*.jpg|All files(*.*)|*.*";
+            dlgOpen.InitialDirectory = "E:\\BaiGiang"; dlgOpen.FilterIndex = 2;
+            dlgOpen.Title = "Chọn ảnh để hiển thị";
+            if (dlgOpen.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                pictureBox1.Visible = true;
+                pictureBox1.Image = Image.FromFile(dlgOpen.FileName);
+                txtImg.Text = dlgOpen.FileName;
+            }
+            else MessageBox.Show("You clicked Cancel", "Open Dialog",
+               MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void Btn_NgheNhac_Click(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.URL = "MuonRuouToTinh-EmilyBigDaddy-5871420.mp3";
+            
+        }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Alt)
+            {
+                if(e.KeyCode.Equals(Keys.T))
+                {
+                    Bt_Thoat_Click(null, null);
+                }
             }
         }
     }

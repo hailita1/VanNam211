@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txt_MucLuong = new System.Windows.Forms.TextBox();
             this.txt_TenCV = new System.Windows.Forms.TextBox();
@@ -49,10 +50,19 @@
             this.bt_XuatExcel = new System.Windows.Forms.Button();
             this.bt_Thoat = new System.Windows.Forms.Button();
             this.bt_LamMoi = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.txtImg = new System.Windows.Forms.TextBox();
+            this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
+            this.btn_Anh = new System.Windows.Forms.Button();
+            this.btn_NgheNhac = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -76,6 +86,7 @@
             this.txt_MucLuong.Name = "txt_MucLuong";
             this.txt_MucLuong.Size = new System.Drawing.Size(131, 20);
             this.txt_MucLuong.TabIndex = 5;
+            this.txt_MucLuong.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txt_MucLuong_KeyPress);
             // 
             // txt_TenCV
             // 
@@ -196,7 +207,7 @@
             // 
             // bt_Them
             // 
-            this.bt_Them.Location = new System.Drawing.Point(433, 249);
+            this.bt_Them.Location = new System.Drawing.Point(462, 250);
             this.bt_Them.Name = "bt_Them";
             this.bt_Them.Size = new System.Drawing.Size(95, 40);
             this.bt_Them.TabIndex = 2;
@@ -206,7 +217,7 @@
             // 
             // bt_Sua
             // 
-            this.bt_Sua.Location = new System.Drawing.Point(558, 249);
+            this.bt_Sua.Location = new System.Drawing.Point(563, 250);
             this.bt_Sua.Name = "bt_Sua";
             this.bt_Sua.Size = new System.Drawing.Size(95, 40);
             this.bt_Sua.TabIndex = 3;
@@ -216,7 +227,7 @@
             // 
             // bt_Xoa
             // 
-            this.bt_Xoa.Location = new System.Drawing.Point(679, 249);
+            this.bt_Xoa.Location = new System.Drawing.Point(664, 250);
             this.bt_Xoa.Name = "bt_Xoa";
             this.bt_Xoa.Size = new System.Drawing.Size(95, 40);
             this.bt_Xoa.TabIndex = 4;
@@ -226,7 +237,7 @@
             // 
             // bt_XuatExcel
             // 
-            this.bt_XuatExcel.Location = new System.Drawing.Point(558, 345);
+            this.bt_XuatExcel.Location = new System.Drawing.Point(562, 346);
             this.bt_XuatExcel.Name = "bt_XuatExcel";
             this.bt_XuatExcel.Size = new System.Drawing.Size(95, 40);
             this.bt_XuatExcel.TabIndex = 5;
@@ -236,7 +247,7 @@
             // 
             // bt_Thoat
             // 
-            this.bt_Thoat.Location = new System.Drawing.Point(679, 345);
+            this.bt_Thoat.Location = new System.Drawing.Point(664, 346);
             this.bt_Thoat.Name = "bt_Thoat";
             this.bt_Thoat.Size = new System.Drawing.Size(95, 40);
             this.bt_Thoat.TabIndex = 6;
@@ -246,7 +257,7 @@
             // 
             // bt_LamMoi
             // 
-            this.bt_LamMoi.Location = new System.Drawing.Point(433, 345);
+            this.bt_LamMoi.Location = new System.Drawing.Point(461, 346);
             this.bt_LamMoi.Name = "bt_LamMoi";
             this.bt_LamMoi.Size = new System.Drawing.Size(95, 40);
             this.bt_LamMoi.TabIndex = 7;
@@ -254,11 +265,72 @@
             this.bt_LamMoi.UseVisualStyleBackColor = true;
             this.bt_LamMoi.Click += new System.EventHandler(this.Bt_LamMoi_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(6, 19);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(262, 163);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.txtImg);
+            this.groupBox4.Controls.Add(this.pictureBox1);
+            this.groupBox4.Location = new System.Drawing.Point(808, 12);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(274, 188);
+            this.groupBox4.TabIndex = 9;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Ảnh công việc";
+            // 
+            // txtImg
+            // 
+            this.txtImg.Location = new System.Drawing.Point(89, 148);
+            this.txtImg.Name = "txtImg";
+            this.txtImg.Size = new System.Drawing.Size(100, 20);
+            this.txtImg.TabIndex = 9;
+            this.txtImg.Visible = false;
+            // 
+            // axWindowsMediaPlayer1
+            // 
+            this.axWindowsMediaPlayer1.Enabled = true;
+            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(814, 258);
+            this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
+            this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
+            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(274, 125);
+            this.axWindowsMediaPlayer1.TabIndex = 11;
+            // 
+            // btn_Anh
+            // 
+            this.btn_Anh.Location = new System.Drawing.Point(897, 212);
+            this.btn_Anh.Name = "btn_Anh";
+            this.btn_Anh.Size = new System.Drawing.Size(100, 40);
+            this.btn_Anh.TabIndex = 12;
+            this.btn_Anh.Text = "Ảnh";
+            this.btn_Anh.UseVisualStyleBackColor = true;
+            this.btn_Anh.Click += new System.EventHandler(this.Btn_Anh_Click);
+            // 
+            // btn_NgheNhac
+            // 
+            this.btn_NgheNhac.Location = new System.Drawing.Point(902, 389);
+            this.btn_NgheNhac.Name = "btn_NgheNhac";
+            this.btn_NgheNhac.Size = new System.Drawing.Size(95, 40);
+            this.btn_NgheNhac.TabIndex = 13;
+            this.btn_NgheNhac.Text = "Nghe Nhạc";
+            this.btn_NgheNhac.UseVisualStyleBackColor = true;
+            this.btn_NgheNhac.Click += new System.EventHandler(this.Btn_NgheNhac_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1104, 450);
+            this.Controls.Add(this.btn_NgheNhac);
+            this.Controls.Add(this.btn_Anh);
+            this.Controls.Add(this.axWindowsMediaPlayer1);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.bt_LamMoi);
             this.Controls.Add(this.bt_Thoat);
             this.Controls.Add(this.bt_XuatExcel);
@@ -271,12 +343,17 @@
             this.Name = "Form1";
             this.Text = "Quản lý công việc";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -304,6 +381,12 @@
         private System.Windows.Forms.Button bt_XuatExcel;
         private System.Windows.Forms.Button bt_Thoat;
         private System.Windows.Forms.Button bt_LamMoi;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox txtImg;
+        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
+        private System.Windows.Forms.Button btn_Anh;
+        private System.Windows.Forms.Button btn_NgheNhac;
     }
 }
 
